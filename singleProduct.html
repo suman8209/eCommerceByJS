@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>singlProdcut</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="wrapper">
+		<div id="singleProduct"></div>
+	</div>
+
+
+<script>
+	let pageUrl=window.location.href
+	console.log(pageUrl)
+
+	if (!pageUrl.includes("id")) {
+		alert("click on img")
+
+	}
+	else{
+		let id = pageUrl.split('=')[1]
+		singleProdcut(id)
+		console.log(id)
+	}
+	
+	function singleProdcut(id){
+		fetch("https://dummyjson.com/products/"+id)
+		.then((response) => {
+		return response.json()
+	})
+	.then((result) => {
+		console.log(result)
+		showData(result)
+	})
+
+	}
+
+	function showData(data){
+	// for (let i = 0; i <= data.length; i++) {
+	let box = document.createElement("div")
+	box.classList.add("product")
+
+	let img = document.createElement("img")
+	img.src=data.thumbnail;
+	// let link = document.createElement("a")
+	// link.href="singleProduct.html?id="+i
+	// link.append(img)
+
+
+	let title = document.createElement("h2")
+	title.innerHTML = data.title
+
+	let desc = document.createElement("p")
+	desc.innerHTML = data.description
+
+	let price = document.createElement("h3")
+	
+
+	let icon = document.createElement("i")
+		
+	icon.classList.add("fa-solid", "fa-indian-rupee-sign")
+	price.append(icon)
+
+	price.innerHTML += data.price
+
+
+	
+	box.append(img)
+	box.append(title)
+	box.append(desc)
+	box.append(price)
+
+	document.querySelector('#singleProduct').append(box)
+	// }
+
+}
+</script>
+</body>
+</html>
